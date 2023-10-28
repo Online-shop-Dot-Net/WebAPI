@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models;
 using WebAPI.Services;
 
@@ -16,7 +15,6 @@ namespace WebAPI.Controllers
             _userService = userService;
         }
 
-        // /api/auth/register
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
         {
@@ -34,5 +32,24 @@ namespace WebAPI.Controllers
 
             return BadRequest("Some properties are not valid");
         }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.LoginUserAsync(model);
+
+                if (result.IsSuccess)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid");
+        }
     }
+
 }

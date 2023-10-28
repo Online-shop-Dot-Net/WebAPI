@@ -39,10 +39,10 @@ namespace WebAPI
                 {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = "localhost",
-                    ValidIssuer = "localhost",
+                    ValidAudience = builder.Configuration["AuthSettings:Audience"],
+                    ValidIssuer = builder.Configuration["AuthSettings:Issuer"],
                     RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Key to encription")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AuthSettings:Key"])),
                     ValidateIssuerSigningKey = true
                 };
             });
@@ -65,6 +65,7 @@ namespace WebAPI
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseAuthentication();
 
 
             app.MapControllers();
