@@ -9,10 +9,12 @@ namespace WebAPI.Controllers
     public class AuthController : ControllerBase
     {
         private IUserService _userService;
+        private IMailService _mailService;
 
-        public AuthController(IUserService userService)
+        public AuthController(IUserService userService, IMailService mailService)
         {
             _userService = userService;
+            _mailService = mailService;
         }
 
         [HttpPost("Register")]
@@ -42,6 +44,10 @@ namespace WebAPI.Controllers
 
                 if (result.IsSuccess)
                 {
+                    await _mailService.SendEmailAsync(model.Email,
+                        "New login",
+                        "<h1>Hey!, new login to your account noticed</h1><p>New login to your account at " + DateTime.Now + "</p>"
+                    );
                     return Ok(result);
                 }
 
