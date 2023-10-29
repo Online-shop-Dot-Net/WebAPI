@@ -15,7 +15,8 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SEND_GRID_API_KEY": "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"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7056;http://localhost:5275"

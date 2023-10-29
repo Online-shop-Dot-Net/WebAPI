@@ -21,7 +21,7 @@ namespace WebAPI.Services
 
         public async Task SendEmailAsync(string toEmail, string subject, string content)
         {
-            var apiKey = _configuration["SendGridAPIKey"];
+            var apiKey = Environment.GetEnvironmentVariable("SEND_GRID_API_KEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("mariuszpaluch001@gmail.com", "JWT Auth Demo");
             var to = new EmailAddress(toEmail);
