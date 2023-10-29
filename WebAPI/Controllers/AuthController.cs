@@ -76,6 +76,41 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-    }
 
+        [HttpPost("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                return NotFound();
+            }
+
+            var result = await _userService.ForgetPasswordAsync(email);
+
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _userService.ResetPasswordAsync(model);
+
+                if (result.IsSuccess)
+                {
+                    return Ok(result);
+                }
+
+                return BadRequest(result);
+            }
+
+            return BadRequest("Some properties are not valid");
+        }
+    }
 }
