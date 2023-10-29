@@ -16,11 +16,17 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            var dotenv = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+            DotEnv.Load(dotenv);
+            builder.Configuration.AddEnvironmentVariables();
+
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
                 options.Password.RequireDigit = true;
