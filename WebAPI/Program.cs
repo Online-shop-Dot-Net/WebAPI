@@ -71,6 +71,7 @@ namespace WebAPI
 
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IOrderMapper, OrderMappers>();
+            builder.Services.AddScoped<IProducentMapper, ProducentMappers>();
 
             builder.Services.AddTransient<IMailService, SendGridMailService>();
             builder.Services.AddControllers();

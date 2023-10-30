@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using WebAPI.Models.Data;
 using WebAPI.Models.DataViews;
-using WebAPI.Models.Users;
 
 namespace WebAPI.Services.MapServices
 {
