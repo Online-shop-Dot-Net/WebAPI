@@ -1,5 +1,6 @@
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,7 @@ using System.Text;
 using WebAPI.Models;
 using WebAPI.Models.Users;
 using WebAPI.Services.MailService;
+using WebAPI.Services.MapServices;
 using WebAPI.Services.UserService;
 
 namespace WebAPI
@@ -59,6 +61,7 @@ namespace WebAPI
 
             });
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             builder.Services.Configure<IdentityOptions>(options =>
                     options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
@@ -67,6 +70,8 @@ namespace WebAPI
             builder.Services.AddAuthorization();
 
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IOrderMapper, OrderMappers>();
+
             builder.Services.AddTransient<IMailService, SendGridMailService>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

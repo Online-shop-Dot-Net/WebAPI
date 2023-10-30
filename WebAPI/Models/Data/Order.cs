@@ -12,12 +12,12 @@ namespace WebAPI.Models.Data
         [Key, Column(Order = 0)]
         public int Id { get; set; }
 
+        [Required]
         public string OrderCode { get; set; }
 
         [Required]
         public int Quantity { get; set; }
 
-        [Required]
         public DateTime DateCreated { get; set; } = DateTime.Now;
 
         [Required]
