@@ -1,15 +1,18 @@
-﻿namespace WebAPI.Models
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Hosting;
+
+namespace WebAPI.Models
 {
-    public class Customer
+    public class Customer: IdentityUser
     {
-        public int CustomerId { get; set; }
+        private ILazyLoader LazyLoader { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public string Email { get; set; }
-
-        public string PhoneNumber { get; set; }
+        private ICollection<Order> _orders;
+        public ICollection<Order> orders
+        {
+            get => LazyLoader.Load(this, ref _orders);
+            set => _orders = value;
+        }
     }
 }
