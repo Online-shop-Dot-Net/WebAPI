@@ -1,13 +1,10 @@
-﻿using EllipticCurve.Utils;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebAPI.Models.Data
 {
+    [Index(nameof(OrderCode), IsUnique = true)]
     public class Order
     {
 
@@ -15,8 +12,18 @@ namespace WebAPI.Models.Data
         [Key, Column(Order = 0)]
         public int Id { get; set; }
 
+        public string OrderCode { get; set; }
+
+        [Required]
+        public int Quantity { get; set; }
+
+        [Required]
+        public DateTime DateCreated { get; set; } = DateTime.Now;
+
         [Required]
         public string CustomerId { get; set; }
 
+        [Required]
+        public int ProductId { get; set; }
     }
 }

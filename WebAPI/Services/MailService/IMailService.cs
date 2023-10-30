@@ -1,7 +1,4 @@
-﻿using SendGrid.Helpers.Mail;
-using SendGrid;
-
-namespace WebAPI.Services.MailService
+﻿namespace WebAPI.Services.MailService
 {
     public interface IMailService
     {
