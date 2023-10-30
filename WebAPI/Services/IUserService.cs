@@ -4,7 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using WebAPI.Models;
+using WebAPI.Models.AuthViews;
+using WebAPI.Models.Responses;
+using WebAPI.Models.Users;
 
 namespace WebAPI.Services
 {

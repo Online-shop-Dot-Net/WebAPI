@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebAPI.Models;
+using WebAPI.Models.AuthViews;
 using WebAPI.Services;
 
 namespace WebAPI.Controllers

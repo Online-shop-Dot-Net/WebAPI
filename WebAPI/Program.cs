@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Security.Claims;
 using System.Text;
 using WebAPI.Models;
+using WebAPI.Models.Users;
 using WebAPI.Services;
 
 namespace WebAPI

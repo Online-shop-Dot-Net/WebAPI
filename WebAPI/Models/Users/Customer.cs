@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.Extensions.Hosting;
+using WebAPI.Models.Data;
 
-namespace WebAPI.Models
+namespace WebAPI.Models.Users
 {
-    public class Customer: IdentityUser
+    public class Customer : IdentityUser
     {
         private ILazyLoader LazyLoader { get; set; }
 
