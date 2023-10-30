@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using WebAPI.Models.Users;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.DataControllers
 {
     public class OrdersController : ControllerBase
     {

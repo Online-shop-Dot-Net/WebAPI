@@ -7,22 +7,10 @@ using System.Text;
 using WebAPI.Models.AuthViews;
 using WebAPI.Models.Responses;
 using WebAPI.Models.Users;
+using WebAPI.Services.MailService;
 
-namespace WebAPI.Services
+namespace WebAPI.Services.UserService
 {
-    public interface IUserService
-    {
-        Task<UserManagerResponse> RegisterUserAsync(RegisterViewModel model);
-
-        Task<UserManagerResponse> LoginUserAsync(LoginViewModel model);
-
-        Task<UserManagerResponse> ConfirmEmailAsync(string userID, string token);
-
-        Task<UserManagerResponse> ForgetPasswordAsync(string email);
-        Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordViewModel model);
-
-    }
-
     public class UserService : IUserService
     {
         private UserManager<Customer> _userManager;
@@ -95,7 +83,7 @@ namespace WebAPI.Services
                 throw new NullReferenceException("Register Model is null");
             }
 
-            if(model.Password != model.ConfirmPassword)
+            if (model.Password != model.ConfirmPassword)
             {
                 return new UserManagerResponse()
                 {
@@ -213,12 +201,12 @@ namespace WebAPI.Services
                 };
             }
 
-            if(model.NewPassword != model.ConfirmPassword)
+            if (model.NewPassword != model.ConfirmPassword)
             {
-                return new UserManagerResponse 
-                { 
-                    IsSuccess = false, 
-                    Message = "Password doesn't match its confirmation" 
+                return new UserManagerResponse
+                {
+                    IsSuccess = false,
+                    Message = "Password doesn't match its confirmation"
                 };
             }
             var decodedToken = WebEncoders.Base64UrlDecode(model.Token);
@@ -229,9 +217,9 @@ namespace WebAPI.Services
             if (result.Succeeded)
             {
                 return new UserManagerResponse
-                { 
-                    IsSuccess = true, 
-                    Message = "Password has been reset successfully!" 
+                {
+                    IsSuccess = true,
+                    Message = "Password has been reset successfully!"
                 };
             }
 

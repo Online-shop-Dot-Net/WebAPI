@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebAPI.Models.AuthViews;
-using WebAPI.Services;
+using WebAPI.Services.MailService;
+using WebAPI.Services.UserService;
 
-namespace WebAPI.Controllers
+namespace WebAPI.Controllers.AuthorizationControllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,7 +23,7 @@ namespace WebAPI.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var result = await _userService.RegisterUserAsync(model);
 
@@ -62,14 +63,14 @@ namespace WebAPI.Controllers
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if(string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
+            if (string.IsNullOrWhiteSpace(userId) || string.IsNullOrWhiteSpace(token))
             {
                 return NotFound();
             }
 
             var result = await _userService.ConfirmEmailAsync(userId, token);
 
-            if(result.IsSuccess)
+            if (result.IsSuccess)
             {
                 return Redirect($"{_configuration["AppUrl"]}/ConfirmEmail.html");
             }
@@ -96,7 +97,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody]ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {

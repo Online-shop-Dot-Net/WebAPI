@@ -1,9 +1,7 @@
 
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
@@ -11,7 +9,8 @@ using System.Security.Claims;
 using System.Text;
 using WebAPI.Models;
 using WebAPI.Models.Users;
-using WebAPI.Services;
+using WebAPI.Services.MailService;
+using WebAPI.Services.UserService;
 
 namespace WebAPI
 {
