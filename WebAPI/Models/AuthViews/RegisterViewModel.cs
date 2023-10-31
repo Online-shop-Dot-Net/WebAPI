@@ -1,22 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.Models
+namespace WebAPI.Models.AuthViews
 {
-    public class ResetPasswordViewModel
+    public class RegisterViewModel
     {
         [Required]
-        public string Token { get; set; }
-
-        [Required]
+        [StringLength(50)]
         [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 5)]
-        public string NewPassword { get; set; }
+        public string Password { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 5)]
-        public string ConfirmPassword { get; set;}
+        public string ConfirmPassword { get; set; }
     }
 }

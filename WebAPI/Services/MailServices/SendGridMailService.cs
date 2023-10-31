@@ -1,22 +1,13 @@
 ﻿using SendGrid.Helpers.Mail;
 using SendGrid;
 
-namespace WebAPI.Services
+namespace WebAPI.Services.MailService
 {
-    public interface IMailService
-    {
-    
-        Task SendEmailAsync(string toEmail, string subject, string content);
-    
-    }
-
     public class SendGridMailService : IMailService
     {
-        private IConfiguration _configuration;
 
-        public SendGridMailService(IConfiguration configuration)
+        public SendGridMailService()
         {
-            _configuration = configuration;
         }
 
         public async Task SendEmailAsync(string toEmail, string subject, string content)
