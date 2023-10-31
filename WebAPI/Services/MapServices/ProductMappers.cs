@@ -15,7 +15,6 @@ namespace WebAPI.Services.MapServices
 
     public class ProductMappers : IProductMappers
     {
-
         private readonly IMapper _mapper;
 
         public ProductMappers(IMapper mapper)

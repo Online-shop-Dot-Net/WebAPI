@@ -22,6 +22,5 @@ namespace WebAPI.Services.UserService
         Task<UserManagerResponse> ForgetPasswordAsync(string email);
 
         Task<UserManagerResponse> ResetPasswordAsync(ResetPasswordViewModel model);
-
     }
 }

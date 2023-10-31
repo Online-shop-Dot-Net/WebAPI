@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -18,11 +17,9 @@ namespace WebAPI
 {
     public class Program
     {
-
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
 
             var dotenv = Path.Combine(Directory.GetCurrentDirectory(), ".env");
             DotEnv.Load(dotenv);
@@ -31,40 +28,49 @@ namespace WebAPI
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                );
             });
 
-            builder.Services.AddIdentity<Customer, IdentityRole>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequiredLength = 5;
-            }).AddEntityFrameworkStores<ApplicationDbContext>()
-              .AddDefaultTokenProviders();
-
-            builder.Services.AddAuthentication(auth =>
-            {
-                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.SaveToken = true;
-                options.RequireHttpsMetadata = false;
-                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            builder.Services
+                .AddIdentity<Customer, IdentityRole>(options =>
                 {
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    RequireExpirationTime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["AuthSettings:Key"])),
-                    ValidateIssuerSigningKey = true
-                };
+                    options.Password.RequireDigit = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequiredLength = 5;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            });
+            builder.Services
+                .AddAuthentication(auth =>
+                {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters =
+                        new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                        {
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+                            RequireExpirationTime = true,
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(builder.Configuration["AuthSettings:Key"])
+                            ),
+                            ValidateIssuerSigningKey = true
+                        };
+                });
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-            builder.Services.Configure<IdentityOptions>(options =>
-                    options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
+            builder.Services.Configure<IdentityOptions>(
+                options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier
+            );
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddAuthorization();
@@ -74,24 +80,25 @@ namespace WebAPI
             builder.Services.AddScoped<IProducentMapper, ProducentMappers>();
             builder.Services.AddScoped<IProductMappers, ProductMappers>();
 
-
             builder.Services.AddTransient<IMailService, SendGridMailService>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => 
-                {
-                    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition(
+                    "oauth2",
+                    new OpenApiSecurityScheme
                     {
-                        Description = "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
+                        Description =
+                            "Standard Authorization header using the Bearer scheme (\"bearer {token}\")",
                         In = ParameterLocation.Header,
                         Name = "Authorization",
                         Type = SecuritySchemeType.ApiKey
-                    });
-                    options.OperationFilter<SecurityRequirementsOperationFilter>();
-                }
-            
-            );
+                    }
+                );
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
 
             var app = builder.Build();
             // Configure the HTTP request pipeline.
@@ -107,7 +114,7 @@ namespace WebAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.MapControllers();
 
             app.Run();

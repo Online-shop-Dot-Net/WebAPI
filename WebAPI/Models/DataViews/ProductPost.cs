@@ -4,7 +4,6 @@ namespace WebAPI.Models.DataViews
 {
     public class ProductPost
     {
-
         [Required]
         public string ProductName { get; set; }
 

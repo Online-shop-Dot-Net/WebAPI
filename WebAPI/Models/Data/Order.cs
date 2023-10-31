@@ -7,7 +7,6 @@ namespace WebAPI.Models.Data
     [Index(nameof(OrderCode), IsUnique = true)]
     public class Order
     {
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key, Column(Order = 0)]
         public int Id { get; set; }

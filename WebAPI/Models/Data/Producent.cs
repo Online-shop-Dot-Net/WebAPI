@@ -6,7 +6,6 @@ namespace WebAPI.Models.Data
 {
     public class Producent
     {
-
         private ILazyLoader LazyLoader { get; set; }
 
         private ICollection<Order> _products;

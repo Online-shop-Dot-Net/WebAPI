@@ -28,6 +28,5 @@ namespace WebAPI.Models.Data
 
         [Required]
         public int ProducentId { get; set; }
-
     }
 }

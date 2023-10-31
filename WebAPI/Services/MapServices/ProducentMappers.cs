@@ -13,9 +13,8 @@ namespace WebAPI.Services.MapServices
         public Producent MapToProducent(ProducentPost producentPost);
     }
 
-    public class ProducentMappers: IProducentMapper
+    public class ProducentMappers : IProducentMapper
     {
-
         private readonly IMapper _mapper;
 
         public ProducentMappers(IMapper mapper)

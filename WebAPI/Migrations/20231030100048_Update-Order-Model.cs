@@ -10,26 +10,23 @@ namespace WebAPI.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Orders_AspNetUsers_ownerId",
-                table: "Orders");
+            migrationBuilder.DropForeignKey(name: "FK_Orders_AspNetUsers_ownerId", table: "Orders");
 
-            migrationBuilder.RenameColumn(
-                name: "ownerId",
-                table: "Orders",
-                newName: "CustomerId");
+            migrationBuilder.RenameColumn(name: "ownerId", table: "Orders", newName: "CustomerId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_Orders_ownerId",
                 table: "Orders",
-                newName: "IX_Orders_CustomerId");
+                newName: "IX_Orders_CustomerId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
                 table: "Orders",
                 column: "CustomerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
 
         /// <inheritdoc />
@@ -37,24 +34,24 @@ namespace WebAPI.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
-                table: "Orders");
+                table: "Orders"
+            );
 
-            migrationBuilder.RenameColumn(
-                name: "CustomerId",
-                table: "Orders",
-                newName: "ownerId");
+            migrationBuilder.RenameColumn(name: "CustomerId", table: "Orders", newName: "ownerId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
-                newName: "IX_Orders_ownerId");
+                newName: "IX_Orders_ownerId"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_ownerId",
                 table: "Orders",
                 column: "ownerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
     }
 }
