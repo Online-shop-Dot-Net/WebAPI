@@ -16,7 +16,11 @@ namespace WebAPI.Controllers.DataControllers
         private readonly ApplicationDbContext _context;
         private readonly IOrderMapper _mapper;
 
-        public OrdersController(UserManager<Customer> userManager, ApplicationDbContext dbContext, IOrderMapper mapper)
+        public OrdersController(
+            UserManager<Customer> userManager,
+            ApplicationDbContext dbContext,
+            IOrderMapper mapper
+        )
         {
             _userManager = userManager;
             _context = dbContext;

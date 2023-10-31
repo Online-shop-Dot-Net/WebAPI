@@ -5,10 +5,7 @@ namespace WebAPI.Services.MailService
 {
     public class SendGridMailService : IMailService
     {
-
-        public SendGridMailService()
-        {
-        }
+        public SendGridMailService() { }
 
         public async Task SendEmailAsync(string toEmail, string subject, string content)
         {

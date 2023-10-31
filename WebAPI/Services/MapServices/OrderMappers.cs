@@ -4,7 +4,6 @@ using WebAPI.Models.DataViews;
 
 namespace WebAPI.Services.MapServices
 {
-
     public interface IOrderMapper
     {
         public OrderGet MapToOrderGet(Order order);
@@ -14,7 +13,7 @@ namespace WebAPI.Services.MapServices
         public Order MapToOrder(OrderPost orderPost);
     }
 
-    public class OrderMappers: IOrderMapper
+    public class OrderMappers : IOrderMapper
     {
         private readonly IMapper _mapper;
 
@@ -37,6 +36,5 @@ namespace WebAPI.Services.MapServices
         {
             return _mapper.Map<List<Order>, List<OrderGet>>(orders);
         }
-
     }
 }

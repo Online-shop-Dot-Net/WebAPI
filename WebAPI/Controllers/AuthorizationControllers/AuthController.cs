@@ -13,7 +13,11 @@ namespace WebAPI.Controllers.AuthorizationControllers
         private IMailService _mailService;
         private IConfiguration _configuration;
 
-        public AuthController(IUserService userService, IMailService mailService, IConfiguration configuration)
+        public AuthController(
+            IUserService userService,
+            IMailService mailService,
+            IConfiguration configuration
+        )
         {
             _userService = userService;
             _mailService = mailService;
@@ -47,9 +51,12 @@ namespace WebAPI.Controllers.AuthorizationControllers
 
                 if (result.IsSuccess)
                 {
-                    await _mailService.SendEmailAsync(model.Email,
+                    await _mailService.SendEmailAsync(
+                        model.Email,
                         "New login",
-                        "<h1>Hey!, new login to your account noticed</h1><p>New login to your account at " + DateTime.Now + "</p>"
+                        "<h1>Hey!, new login to your account noticed</h1><p>New login to your account at "
+                            + DateTime.Now
+                            + "</p>"
                     );
                     return Ok(result);
                 }

@@ -12,7 +12,8 @@ namespace WebAPI.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
-                table: "Orders");
+                table: "Orders"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "CustomerId",
@@ -22,7 +23,8 @@ namespace WebAPI.Migrations
                 defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(450)",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
@@ -30,7 +32,8 @@ namespace WebAPI.Migrations
                 column: "CustomerId",
                 principalTable: "AspNetUsers",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         /// <inheritdoc />
@@ -38,7 +41,8 @@ namespace WebAPI.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
-                table: "Orders");
+                table: "Orders"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "CustomerId",
@@ -46,14 +50,16 @@ namespace WebAPI.Migrations
                 type: "nvarchar(450)",
                 nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+                oldType: "nvarchar(450)"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Orders_AspNetUsers_CustomerId",
                 table: "Orders",
                 column: "CustomerId",
                 principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
     }
 }

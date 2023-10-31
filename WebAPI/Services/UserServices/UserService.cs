@@ -16,13 +16,17 @@ namespace WebAPI.Services.UserService
         private UserManager<Customer> _userManager;
         private IConfiguration _configuration;
         private IMailService _mailService;
-        public UserService(UserManager<Customer> userManager, IConfiguration configuration, IMailService mailService)
+
+        public UserService(
+            UserManager<Customer> userManager,
+            IConfiguration configuration,
+            IMailService mailService
+        )
         {
             _userManager = userManager;
             _configuration = configuration;
             _mailService = mailService;
         }
-
 
         public async Task<UserManagerResponse> LoginUserAsync(LoginViewModel model)
         {
@@ -56,7 +60,9 @@ namespace WebAPI.Services.UserService
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"]));
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["AuthSettings:Key"])
+            );
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["AuthSettings:Issuer"],
@@ -92,25 +98,28 @@ namespace WebAPI.Services.UserService
                 };
             }
 
-            var user = new Customer
-            {
-                Email = model.Email,
-                UserName = model.Email,
-            };
+            var user = new Customer { Email = model.Email, UserName = model.Email, };
 
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmEmailToken = await _userManager.GenerateEmailConfirmationTokenAsync(
+                    user
+                );
 
                 var encodedEmailToken = Encoding.UTF8.GetBytes(confirmEmailToken);
                 var validEmailToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
 
-                string url = $"{_configuration["AppUrl"]}/api/auth/confirmemail?userid={user.Id}&token={validEmailToken}";
+                string url =
+                    $"{_configuration["AppUrl"]}/api/auth/confirmemail?userid={user.Id}&token={validEmailToken}";
 
-                await _mailService.SendEmailAsync(user.Email, "Confirm your email", $"<h1>Welcome to Auth Demo</h1>" +
-                                    $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>");
+                await _mailService.SendEmailAsync(
+                    user.Email,
+                    "Confirm your email",
+                    $"<h1>Welcome to Auth Demo</h1>"
+                        + $"<p>Please confirm your email by <a href='{url}'>Clicking here</a></p>"
+                );
 
                 return new UserManagerResponse
                 {
@@ -126,16 +135,13 @@ namespace WebAPI.Services.UserService
                 Errors = result.Errors.Select(e => e.Description)
             };
         }
+
         public async Task<UserManagerResponse> ConfirmEmailAsync(string userID, string token)
         {
             var user = await _userManager.FindByIdAsync(userID);
             if (user == null)
             {
-                return new UserManagerResponse()
-                {
-                    IsSuccess = false,
-                    Message = "User not found"
-                };
+                return new UserManagerResponse() { IsSuccess = false, Message = "User not found" };
             }
 
             var decodedToken = WebEncoders.Base64UrlDecode(token);
@@ -158,7 +164,6 @@ namespace WebAPI.Services.UserService
                 Message = "Email did not confirm",
                 Errors = result.Errors.Select(e => e.Description)
             };
-
         }
 
         public async Task<UserManagerResponse> ForgetPasswordAsync(string email)
@@ -177,10 +182,15 @@ namespace WebAPI.Services.UserService
             var encodedEmailToken = Encoding.UTF8.GetBytes(token);
             var validToken = WebEncoders.Base64UrlEncode(encodedEmailToken);
 
-            string url = $"{_configuration["AppUrl"]}/ResetPassword?email={email}&token={validToken}";
+            string url =
+                $"{_configuration["AppUrl"]}/ResetPassword?email={email}&token={validToken}";
 
-            await _mailService.SendEmailAsync(email, "Reset Password", "<h1>Follow the instructions to reset your password</h1>" +
-                $"<p>To reset your password <a href='{url}'>Click here</a></p>");
+            await _mailService.SendEmailAsync(
+                email,
+                "Reset Password",
+                "<h1>Follow the instructions to reset your password</h1>"
+                    + $"<p>To reset your password <a href='{url}'>Click here</a></p>"
+            );
 
             return new UserManagerResponse
             {
@@ -212,7 +222,11 @@ namespace WebAPI.Services.UserService
             var decodedToken = WebEncoders.Base64UrlDecode(model.Token);
             string normalToken = Encoding.UTF8.GetString(decodedToken);
 
-            var result = await _userManager.ResetPasswordAsync(user, normalToken, model.NewPassword);
+            var result = await _userManager.ResetPasswordAsync(
+                user,
+                normalToken,
+                model.NewPassword
+            );
 
             if (result.Succeeded)
             {

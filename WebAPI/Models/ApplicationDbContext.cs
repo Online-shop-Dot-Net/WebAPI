@@ -6,13 +6,10 @@ using WebAPI.Models.Users;
 
 namespace WebAPI.Models
 {
-    public class ApplicationDbContext :
-        IdentityDbContext<Customer, IdentityRole, string>
+    public class ApplicationDbContext : IdentityDbContext<Customer, IdentityRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+            : base(options) { }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
