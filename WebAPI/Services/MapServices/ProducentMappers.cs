@@ -6,11 +6,11 @@ namespace WebAPI.Services.MapServices
 {
     public interface IProducentMapper
     {
-        public ProducentGet MapToProducentGet(Producent order);
+        public ProducentGet MapToProducentGet(Producent producent);
 
-        public List<ProducentGet> MapToListProducentGet(List<Producent> orders);
+        public List<ProducentGet> MapToListProducentGet(List<Producent> producents);
 
-        public Producent MapToProducent(ProducentPost orderPost);
+        public Producent MapToProducent(ProducentPost producentPost);
     }
 
     public class ProducentMappers: IProducentMapper
@@ -23,14 +23,14 @@ namespace WebAPI.Services.MapServices
             _mapper = mapper;
         }
 
-        public ProducentGet MapToProducentGet(Producent order)
+        public ProducentGet MapToProducentGet(Producent producent)
         {
-            return _mapper.Map<ProducentGet>(order);
+            return _mapper.Map<ProducentGet>(producent);
         }
 
-        public Producent MapToProducent(ProducentPost orderPost)
+        public Producent MapToProducent(ProducentPost producentPost)
         {
-            return _mapper.Map<Producent>(orderPost);
+            return _mapper.Map<Producent>(producentPost);
         }
 
         public List<ProducentGet> MapToListProducentGet(List<Producent> producents)
