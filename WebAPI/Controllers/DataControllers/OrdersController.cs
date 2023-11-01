@@ -33,7 +33,7 @@ namespace WebAPI.Controllers.DataControllers
         {
             var user = await _userManager.GetUserAsync(User);
             var orders = user.orders.ToList();
-            var getOrders = _mapper.MapToListOrderGet(orders);
+            var getOrders = await _mapper.MapToListOrderGet(orders);
             return Ok(getOrders);
         }
 
@@ -47,7 +47,7 @@ namespace WebAPI.Controllers.DataControllers
             {
                 return BadRequest("There is no such order.");
             }
-            var getOrder = _mapper.MapToOrderGet(order);
+            var getOrder = await _mapper.MapToOrderGet(order);
             return Ok(getOrder);
         }
 

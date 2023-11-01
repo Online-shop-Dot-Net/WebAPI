@@ -20,6 +20,9 @@ namespace WebAPI.Models.Data
         [Key, Column(Order = 0)]
         public int ProductId { get; set; }
 
+        [Column(TypeName = "money")]
+        public decimal Price { get; set; }
+
         [Required]
         public string ProductName { get; set; }
 

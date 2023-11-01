@@ -39,12 +39,14 @@ namespace WebAPI.Services.MapServices
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.ProductId))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProducentId, opt => opt.MapFrom(src => src.ProducentId))
-                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName));
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
 
             CreateMap<ProductPost, Product>()
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
                 .ForMember(dest => dest.ProducentId, opt => opt.MapFrom(src => src.ProducentId))
-                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName));
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.ProductName))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price));
         }
     }
 }
