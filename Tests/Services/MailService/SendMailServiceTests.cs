@@ -23,13 +23,16 @@ namespace WebAPI.Tests.Services.MailService
             var subject = "Test";
             var content = "Test-content";
             await _sendGridMailService.SendEmailAsync(toEmail, subject, content);
-            _mockSendGridClient
-                .Verify(sg => sg.SendEmailAsync(
-                    It.Is<SendGridMessage>(sgm => sgm.Personalizations[0].Tos[0].Email == toEmail), 
-                    It.IsAny<CancellationToken>()
-                ), Times.Once);
-
+            _mockSendGridClient.Verify(
+                sg =>
+                    sg.SendEmailAsync(
+                        It.Is<SendGridMessage>(
+                            sgm => sgm.Personalizations[0].Tos[0].Email == toEmail
+                        ),
+                        It.IsAny<CancellationToken>()
+                    ),
+                Times.Once
+            );
         }
-
     }
 }

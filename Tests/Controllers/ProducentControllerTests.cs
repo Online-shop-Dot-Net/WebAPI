@@ -15,6 +15,7 @@ namespace Tests.Controllers
     public class ProducentControllerTests
     {
         private MapperConfiguration mapperConfig;
+
         public ProducentControllerTests()
         {
             mapperConfig = new MapperConfiguration(cfg =>
@@ -46,11 +47,46 @@ namespace Tests.Controllers
             var mapper = new Mapper(mapperConfig);
             var producentMapper = new ProducentMappers(mapper);
 
-            _dbContext.Add(new Producent { ProducentId = 1, ProducentName = "TEST", Description = "TEST" });
-            _dbContext.Add(new Producent { ProducentId = 2, ProducentName = "TEST", Description = "TEST" });
-            _dbContext.Add(new Producent { ProducentId = 3, ProducentName = "TEST", Description = "TEST" });
-            _dbContext.Add(new Producent { ProducentId = 4, ProducentName = "TEST", Description = "TEST" });
-            _dbContext.Add(new Producent { ProducentId = 5, ProducentName = "TEST", Description = "TEST" });
+            _dbContext.Add(
+                new Producent
+                {
+                    ProducentId = 1,
+                    ProducentName = "TEST",
+                    Description = "TEST"
+                }
+            );
+            _dbContext.Add(
+                new Producent
+                {
+                    ProducentId = 2,
+                    ProducentName = "TEST",
+                    Description = "TEST"
+                }
+            );
+            _dbContext.Add(
+                new Producent
+                {
+                    ProducentId = 3,
+                    ProducentName = "TEST",
+                    Description = "TEST"
+                }
+            );
+            _dbContext.Add(
+                new Producent
+                {
+                    ProducentId = 4,
+                    ProducentName = "TEST",
+                    Description = "TEST"
+                }
+            );
+            _dbContext.Add(
+                new Producent
+                {
+                    ProducentId = 5,
+                    ProducentName = "TEST",
+                    Description = "TEST"
+                }
+            );
 
             _dbContext.SaveChanges();
 
