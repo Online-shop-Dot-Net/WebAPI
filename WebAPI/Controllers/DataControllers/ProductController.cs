@@ -18,22 +18,22 @@ namespace WebAPI.Controllers.DataControllers
         }
 
         [HttpGet("GetAllProducts")]
-        public IActionResult GetAllProducts()
+        public async Task<IActionResult> GetAllProducts()
         {
             var products = _context.Products.ToList();
-            var getProducts = _mapper.MapToListProductGet(products);
+            var getProducts = await _mapper.MapToListProductGet(products);
             return Ok(getProducts);
         }
 
         [HttpGet("GetProductsById")]
-        public IActionResult GetProductsById(int id)
+        public async Task<IActionResult> GetProductsById(int id)
         {
             var product = _context.Products.Where(p => p.ProductId == id).FirstOrDefault();
             if (product is null)
             {
                 return BadRequest("There is no such producent.");
             }
-            var getProduct = _mapper.MapToProductGet(product);
+            var getProduct = await _mapper.MapToProductGetAsync(product);
             return Ok(getProduct);
         }
 

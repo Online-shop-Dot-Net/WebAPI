@@ -14,6 +14,11 @@ namespace WebAPI.Models.DataViews
         public string Description { get; set; }
 
         [Required]
+        public decimal Price { get; set; }
+
+        [Required]
         public int ProducentId { get; set; }
+
+        public string ProducentName { get; set; }
     }
 }

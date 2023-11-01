@@ -1,4 +1,7 @@
 ﻿using AutoMapper;
+using EllipticCurve.Utils;
+using Microsoft.EntityFrameworkCore;
+using WebAPI.Models;
 using WebAPI.Models.Data;
 using WebAPI.Models.DataViews;
 
@@ -6,9 +9,9 @@ namespace WebAPI.Services.MapServices
 {
     public interface IProductMappers
     {
-        public ProductGet MapToProductGet(Product product);
+        public Task<ProductGet> MapToProductGetAsync(Product product);
 
-        public List<ProductGet> MapToListProductGet(List<Product> products);
+        public Task<List<ProductGet>> MapToListProductGet(List<Product> products);
 
         public Product MapToProduct(ProductPost productPost);
     }
@@ -16,15 +19,27 @@ namespace WebAPI.Services.MapServices
     public class ProductMappers : IProductMappers
     {
         private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _context;
 
-        public ProductMappers(IMapper mapper)
+        public ProductMappers(IMapper mapper, ApplicationDbContext dbContext)
         {
             _mapper = mapper;
+            _context = dbContext;
         }
 
-        public ProductGet MapToProductGet(Product product)
+        public async Task<ProductGet> MapToProductGetAsync(Product product)
         {
-            return _mapper.Map<ProductGet>(product);
+
+            var mappedProduct = _mapper.Map<ProductGet>(product);
+
+            var producent = await _context.Producents.FirstOrDefaultAsync(x => x.ProducentId == mappedProduct.ProducentId);
+
+            if (product != null)
+            {
+                mappedProduct.ProducentName = producent.ProducentName;
+            }
+
+            return mappedProduct;
         }
 
         public Product MapToProduct(ProductPost productPost)
@@ -32,9 +47,19 @@ namespace WebAPI.Services.MapServices
             return _mapper.Map<Product>(productPost);
         }
 
-        public List<ProductGet> MapToListProductGet(List<Product> products)
+        public async Task<List<ProductGet>> MapToListProductGet(List<Product> products)
         {
-            return _mapper.Map<List<Product>, List<ProductGet>>(products);
+            var mappedProductList = _mapper.Map<List<Product>, List<ProductGet>>(products);
+            foreach (var mappedProduct in mappedProductList)
+            {
+                var producent = await _context.Producents.FirstOrDefaultAsync(x => x.ProducentId == mappedProduct.ProducentId);
+
+                if (producent != null)
+                {
+                    mappedProduct.ProducentName = producent.ProducentName;
+                }
+            }
+            return mappedProductList;
         }
     }
 }
