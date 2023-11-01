@@ -29,10 +29,11 @@ namespace WebAPI.Services.MapServices
 
         public async Task<ProductGet> MapToProductGetAsync(Product product)
         {
-
             var mappedProduct = _mapper.Map<ProductGet>(product);
 
-            var producent = await _context.Producents.FirstOrDefaultAsync(x => x.ProducentId == mappedProduct.ProducentId);
+            var producent = await _context.Producents.FirstOrDefaultAsync(
+                x => x.ProducentId == mappedProduct.ProducentId
+            );
 
             if (product != null)
             {
@@ -52,7 +53,9 @@ namespace WebAPI.Services.MapServices
             var mappedProductList = _mapper.Map<List<Product>, List<ProductGet>>(products);
             foreach (var mappedProduct in mappedProductList)
             {
-                var producent = await _context.Producents.FirstOrDefaultAsync(x => x.ProducentId == mappedProduct.ProducentId);
+                var producent = await _context.Producents.FirstOrDefaultAsync(
+                    x => x.ProducentId == mappedProduct.ProducentId
+                );
 
                 if (producent != null)
                 {

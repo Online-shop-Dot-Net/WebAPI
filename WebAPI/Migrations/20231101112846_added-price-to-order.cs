@@ -15,15 +15,14 @@ namespace WebAPI.Migrations
                 table: "Products",
                 type: "money",
                 nullable: false,
-                defaultValue: 0m);
+                defaultValue: 0m
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Price",
-                table: "Products");
+            migrationBuilder.DropColumn(name: "Price", table: "Products");
         }
     }
 }

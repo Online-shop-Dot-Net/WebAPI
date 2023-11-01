@@ -30,7 +30,9 @@ namespace WebAPI.Services.MapServices
         {
             var mappedOrder = _mapper.Map<OrderGet>(order);
 
-            var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == mappedOrder.ProductId);
+            var product = await _context.Products.FirstOrDefaultAsync(
+                x => x.ProductId == mappedOrder.ProductId
+            );
 
             if (product != null)
             {
@@ -52,7 +54,9 @@ namespace WebAPI.Services.MapServices
             var mappedOrderList = _mapper.Map<List<Order>, List<OrderGet>>(orders);
             foreach (var mappedOrder in mappedOrderList)
             {
-                var product = await _context.Products.FirstOrDefaultAsync(x => x.ProductId == mappedOrder.ProductId);
+                var product = await _context.Products.FirstOrDefaultAsync(
+                    x => x.ProductId == mappedOrder.ProductId
+                );
 
                 if (product != null)
                 {
