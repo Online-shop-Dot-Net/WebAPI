@@ -8,6 +8,7 @@ namespace WebAPI.Services.MailService
     public class SendGridMailService : IMailService
     {
         private readonly ISendGridClient _client;
+
         public SendGridMailService(ISendGridClient client)
         {
             _client = client;
