@@ -12,6 +12,7 @@ using WebAPI.Models.Users;
 using WebAPI.Services.MailService;
 using WebAPI.Services.MapServices;
 using WebAPI.Services.UserService;
+using SendGrid.Extensions.DependencyInjection;
 
 namespace WebAPI
 {
@@ -98,6 +99,11 @@ namespace WebAPI
                     }
                 );
                 options.OperationFilter<SecurityRequirementsOperationFilter>();
+            });
+
+            builder.Services.AddSendGrid(options =>
+            {
+                options.ApiKey = Environment.GetEnvironmentVariable("SEND_GRID_API_KEY");
             });
 
             var app = builder.Build();
