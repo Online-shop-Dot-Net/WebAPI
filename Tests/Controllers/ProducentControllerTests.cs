@@ -33,8 +33,8 @@ namespace Tests.Controllers
                         opt => opt.MapFrom(src => src.ProducentName)
                     );
 
-                _fixture = fixture;
             });
+            _fixture = fixture;
         }
 
         [Fact]
@@ -43,12 +43,12 @@ namespace Tests.Controllers
             var mapper = new Mapper(mapperConfig);
             var producentMapper = new ProducentMappers(mapper);
 
-            ProducentController userService = new ProducentController(
+            var producentController = new ProducentController(
                 _fixture._dbContext,
                 producentMapper
             );
 
-            var allProducents = userService.GetAllProducents();
+            var allProducents = producentController.GetAllProducents();
             var okResult = allProducents as OkObjectResult;
             Assert.NotNull(okResult);
 
@@ -62,12 +62,12 @@ namespace Tests.Controllers
             var mapper = new Mapper(mapperConfig);
             var producentMapper = new ProducentMappers(mapper);
 
-            ProducentController userService = new ProducentController(
+            var producentController = new ProducentController(
                 _fixture._dbContext,
                 producentMapper
             );
 
-            var producentResult = userService.GetProducentById(1);
+            var producentResult = producentController.GetProducentById(1);
             var okResult = producentResult as OkObjectResult;
             Assert.NotNull(okResult);
 

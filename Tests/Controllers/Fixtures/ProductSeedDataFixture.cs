@@ -4,19 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Models;
 using WebAPI.Models.Data;
+using WebAPI.Models;
 
 namespace Tests.Controllers.Fixtures
 {
-    public class ProducentSeedDataFixture : IDisposable
+    public class ProductSeedDataFixture : IDisposable
     {
         public ApplicationDbContext _dbContext { get; private set; }
 
-        public ProducentSeedDataFixture()
+        public ProductSeedDataFixture()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseInMemoryDatabase(databaseName: "db_producent_tests");
+            optionsBuilder.UseInMemoryDatabase(databaseName: "db_product_tests");
             _dbContext = new ApplicationDbContext(optionsBuilder.Options);
             InitDatabase();
         }
@@ -31,45 +31,43 @@ namespace Tests.Controllers.Fixtures
                     Description = "TEST"
                 }
             );
+
             _dbContext.Add(
-                new Producent
+                new Product
                 {
-                    ProducentId = 2,
-                    ProducentName = "TEST",
-                    Description = "TEST"
+                    ProductId = 1,
+                    ProductName = "TEST",
+                    Description = "TEST",
+                    ProducentId = 1
                 }
             );
+
             _dbContext.Add(
-                new Producent
+                new Product
                 {
-                    ProducentId = 3,
-                    ProducentName = "TEST",
-                    Description = "TEST"
+                    ProductId = 2,
+                    ProductName = "TEST",
+                    Description = "TEST",
+                    ProducentId = 1
                 }
             );
+
             _dbContext.Add(
-                new Producent
+                new Product
                 {
-                    ProducentId = 4,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
-            );
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 5,
-                    ProducentName = "TEST",
-                    Description = "TEST"
+                    ProductId = 3,
+                    ProductName = "TEST",
+                    Description = "TEST",
+                    ProducentId = 1
                 }
             );
 
             _dbContext.SaveChanges();
         }
+
         public void Dispose()
         {
             _dbContext.Dispose();
         }
-
     }
 }

@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace Tests.Controllers
 {
-    internal class OrderControllerTests
-    {
-    }
+    internal class OrderControllerTests { }
 }
