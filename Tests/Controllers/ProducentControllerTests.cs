@@ -1,22 +1,20 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Moq;
-using SendGrid;
+using Tests.Controllers.Fixtures;
 using WebAPI.Controllers.DataControllers;
 using WebAPI.Models;
 using WebAPI.Models.Data;
 using WebAPI.Models.DataViews;
-using WebAPI.Services.MailService;
 using WebAPI.Services.MapServices;
 
 namespace Tests.Controllers
 {
-    public class ProducentControllerTests
+    public class ProducentControllerTests : IClassFixture<ProducentSeedDataFixture>
     {
-        private MapperConfiguration mapperConfig;
+        private readonly MapperConfiguration mapperConfig;
+        private ProducentSeedDataFixture _fixture;
 
-        public ProducentControllerTests()
+        public ProducentControllerTests(ProducentSeedDataFixture fixture)
         {
             mapperConfig = new MapperConfiguration(cfg =>
             {
@@ -34,63 +32,21 @@ namespace Tests.Controllers
                         dest => dest.ProducentName,
                         opt => opt.MapFrom(src => src.ProducentName)
                     );
+
+                _fixture = fixture;
             });
         }
 
         [Fact]
         public void TestGetAllProducents()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseInMemoryDatabase(databaseName: "db");
-            var _dbContext = new ApplicationDbContext(optionsBuilder.Options);
-
             var mapper = new Mapper(mapperConfig);
             var producentMapper = new ProducentMappers(mapper);
 
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 1,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
+            ProducentController userService = new ProducentController(
+                _fixture._dbContext,
+                producentMapper
             );
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 2,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
-            );
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 3,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
-            );
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 4,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
-            );
-            _dbContext.Add(
-                new Producent
-                {
-                    ProducentId = 5,
-                    ProducentName = "TEST",
-                    Description = "TEST"
-                }
-            );
-
-            _dbContext.SaveChanges();
-
-            ProducentController userService = new ProducentController(_dbContext, producentMapper);
 
             var allProducents = userService.GetAllProducents();
             var okResult = allProducents as OkObjectResult;
@@ -98,6 +54,27 @@ namespace Tests.Controllers
 
             var producents = okResult.Value as List<ProducentGet>;
             Assert.Equal(5, producents.Count());
+        }
+
+        [Fact]
+        public void TestGetProducent()
+        {
+            var mapper = new Mapper(mapperConfig);
+            var producentMapper = new ProducentMappers(mapper);
+
+            ProducentController userService = new ProducentController(
+                _fixture._dbContext,
+                producentMapper
+            );
+
+            var producentResult = userService.GetProducentById(1);
+            var okResult = producentResult as OkObjectResult;
+            Assert.NotNull(okResult);
+
+            var producent = okResult.Value as ProducentGet;
+            Assert.Equal(1, producent.ProducentId);
+            Assert.Equal("TEST", producent.ProducentName);
+            Assert.Equal("TEST", producent.Description);
         }
     }
 }
