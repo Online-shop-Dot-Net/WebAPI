@@ -23,5 +23,10 @@ To run project you need to:
 $ dotnet run
 ```
 
+To run project's tests you need to:
+```sh
+$ dotnet test
+```
+
 ## Deploying a .NET Core Web API microservice on Azure
 @TODO
